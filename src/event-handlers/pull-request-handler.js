@@ -90,21 +90,7 @@ var onSync = R.curry(function(res, body) {
                 R.always(Q.fcall(R.always(pr))),
                 R.always(cr)
             );
-            // if (pr) {
-            //     next = Q.fcall(function() {
-            //         return pr
-            //     });
-            // } else {
-            //     next = createHerokuApp(branchName)
-            //         .then(function(app) {
-            //             return storePullRequest({
-            //                 pull_request: body.pull_request,
-            //                 heroku_app: app
-            //             });
-            //         });
-            // }
             next(pr).then(function(pr) {
-                console.log(pr);
                 console.log('found');
                 var url = githubUrl(pr.pull_request.user.login, body.repository.name, body.pull_request.head.sha);
                 console.log('building ' + url);
