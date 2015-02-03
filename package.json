@@ -1,0 +1,28 @@
+{
+  "name": "nabu-deployer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha spec/",
+    "start": "index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.11.0",
+    "express": "^4.11.1",
+    "jade": "^1.9.1",
+    "markdown": "^0.5.0",
+    "mongodb": "^1.4.29",
+    "nconf": "^0.7.1",
+    "q": "^1.1.2",
+    "ramda": "^0.9.1",
+    "request": "^2.52.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "nock": "^0.59.1",
+    "supertest": "^0.15.0"
+  }
+}
