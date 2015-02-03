@@ -10,7 +10,7 @@ module.exports = function(pullRequest) {
                 deferred.reject(err);
                 return;
             }
-            deferred.resolve(createResult);
+            deferred.resolve(createResult[0]);
         });
     return deferred.promise;
 }

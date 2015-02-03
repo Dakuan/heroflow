@@ -77,19 +77,47 @@ var onSync = R.curry(function(res, body) {
     console.log('look for ' + id);
     findPullRequest(id)
         .then(function(pr) {
-            console.log('found');
-            var url = githubUrl(pr.pull_request.user.login, body.repository.name, body.pull_request.head.sha);
-            console.log('building ' + url);
-            var toApp = pr.heroku_app.name;
-            console.log('deploy to ' + toApp);
-            buildHerokuApp(toApp, url)
-                .then(function(build) {
-                    return releaseHerokuApp(toApp, build.slug.id);
-                }).then(function() {
-                    res.status(201);
-                    res.send('updated app!');
-                }, onError(res))
-                .done()
+            var next;
+
+            var cr = createHerokuApp(branchName).then(function(app) {
+                return storePullRequest({
+                    pull_request: body.pull_request,
+                    heroku_app: app
+                });
+            });
+            var next = R.ifElse(
+                R.I,
+                R.always(Q.fcall(R.always(pr))),
+                R.always(cr)
+            );
+            // if (pr) {
+            //     next = Q.fcall(function() {
+            //         return pr
+            //     });
+            // } else {
+            //     next = createHerokuApp(branchName)
+            //         .then(function(app) {
+            //             return storePullRequest({
+            //                 pull_request: body.pull_request,
+            //                 heroku_app: app
+            //             });
+            //         });
+            // }
+            next(pr).then(function(pr) {
+                console.log('found');
+                var url = githubUrl(pr.pull_request.user.login, body.repository.name, body.pull_request.head.sha);
+                console.log('building ' + url);
+                var toApp = pr.heroku_app.name;
+                console.log('deploy to ' + toApp);
+                buildHerokuApp(toApp, url)
+                    .then(function(build) {
+                        return releaseHerokuApp(toApp, build.slug.id);
+                    }).then(function() {
+                        res.status(201);
+                        res.send('updated app!');
+                    }, onError(res))
+                    .done()
+            }, onError(res)).done();
         });
 });
 

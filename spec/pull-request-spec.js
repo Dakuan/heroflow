@@ -87,37 +87,60 @@ describe("Handle Pull Request events", function() {
     });
 
     describe("when a sync pull request event is triggered", function() {
-        var scope;
 
-        beforeEach(function(done) {
-            seed(done);
-            scope = heroku.post('/apps/test-app/builds')
-                .reply(201, require('./data/heroku/create-build-success'))
-                .post('/apps/test-app/releases')
-                .reply(201, {});
+        describe("if there is a stored pr", function() {
+            var scope;
+
+            beforeEach(function(done) {
+                seed(done);
+                scope = heroku.post('/apps/test-app/builds')
+                    .reply(201, require('./data/heroku/create-build-success'))
+                    .post('/apps/test-app/releases')
+                    .reply(201, {});
+            });
+
+            it("should return a 201", function(done) {
+                request(app)
+                    .post('/github')
+                    .send(require('./data/github/pull-request-sync'))
+                    .expect(201, done);
+            });
+
+            it("should call all the endpoints", function(done) {
+                request(app)
+                    .post('/github')
+                    .send(require('./data/github/pull-request-sync'))
+                    .end(function() {
+                        assert(scope.isDone());
+                        done();
+                    });
+            });
+
+            after(function(done) {
+                mongo.getDb()
+                    .collection('pullRequests')
+                    .drop(done);
+            });
         });
 
-        it("should return a 201", function(done) {
-            request(app)
-                .post('/github')
-                .send(require('./data/github/pull-request-sync'))
-                .expect(201, done);
-        });
 
-        it("should call all the endpoints", function(done) {
-            request(app)
-                .post('/github')
-                .send(require('./data/github/pull-request-sync'))
-                .end(function() {
-                    assert(scope.isDone());
-                    done();
-                });
-        });
+        describe("if there is no stored pr", function() {
+            var scope;
 
-        after(function(done) {
-            mongo.getDb()
-                .collection('pullRequests')
-                .drop(done);
+            beforeEach(function() {
+                scope = heroku.post('/apps/test-app/builds')
+                    .reply(201, require('./data/heroku/create-build-success'))
+                    .post('/apps')
+                    .reply(201, require('./data/heroku/create-app-success'))
+                    .post('/apps/test-app/releases')
+                    .reply(201, {});
+            })
+            it("should return a 201", function(done) {
+                request(app)
+                    .post('/github')
+                    .send(require('./data/github/pull-request-sync'))
+                    .expect(201, done);
+            });
         });
     });
 });
