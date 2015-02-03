@@ -104,6 +104,7 @@ var onSync = R.curry(function(res, body) {
             //         });
             // }
             next(pr).then(function(pr) {
+                console.log(pr);
                 console.log('found');
                 var url = githubUrl(pr.pull_request.user.login, body.repository.name, body.pull_request.head.sha);
                 console.log('building ' + url);
