@@ -79,12 +79,13 @@ var onSync = R.curry(function(res, body) {
         .then(function(pr) {
             var next;
 
-            var cr = createHerokuApp(branchName).then(function(app) {
-                return storePullRequest({
-                    pull_request: body.pull_request,
-                    heroku_app: app
+            var cr = createHerokuApp(branchName)
+                .then(function(app) {
+                    return storePullRequest({
+                        pull_request: body.pull_request,
+                        heroku_app: app
+                    });
                 });
-            });
             var next = R.ifElse(
                 R.I,
                 R.always(Q.fcall(R.always(pr))),

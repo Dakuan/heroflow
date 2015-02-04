@@ -1,0 +1,40 @@
+extends layouts/index
+
+block content
+	div
+		h3 Github flow via Heroku
+		p. 
+			Github flow mandates that all commits to the master branch are shipped immediately. 
+			Instead of traditional development and staging environments, each feature should have it's own environment, with constant rebasing ensuring 
+			that integration issues are trapped early. 
+		p.
+			Heroflow aims to make this easy for you.
+		h3 How it works
+		p.
+			Heroflow tracks Github pull requests. When a pull request is created, heroflow creates, configures and manages an instance of your application running on heroku.
+
+		h4 The flow
+
+		ul
+			li You reate a pull request on Github
+			li Heroflow provisions, configures and deploys your app on Heroku
+			li You add commits to your pull request
+			li Heroflow deploys updates to the Heroku app
+			li You merge your feature and delete the pull request
+			li Heroflow deletes the Heroku app
+			li Heroflow dutifully waits for your next pull request to be opened
+
+		h3 Contact
+
+		p For any enquiries please contact Dom Barker
+		a(href="mailto:dom.barker808@gmail.com")
+			i.fa.fa-envelope(style="margin-right:0.5em;")
+			| dom.barker808@gmail.com
+		br
+		a(href="http://twitter.com/mostlyharmlessd") 
+			i.fa.fa-twitter(style="margin-right:0.5em;")
+			| @mostlyharmlessd
+		br			
+		a(href="http://dombarker.co.uk") 
+			i.fa.fa-link(style="margin-right:0.5em;")
+			| dombarker.co.uk

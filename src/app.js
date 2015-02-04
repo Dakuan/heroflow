@@ -17,16 +17,23 @@ app.use(bodyParser.json());
 app.get('/', function(req, res, next) {
     getPullRequests().then(function(prs) {
         res.render('index', {
-            apps: prs
+            apps: prs,
+            route: 'features'
         });
     }).catch(function(e) {
         next(e);
     });
 });
 
+app.get('/about', function(req, res, next) {
+    res.render('about', {
+        route: 'about'
+    });
+});
 
-function through (res) {
-    return function(){
+
+function through(res) {
+    return function() {
         res.send('no matching handler found, not the end of the world');
     }
 }
@@ -36,8 +43,7 @@ app.post('/github', function(req, res, next) {
     var isPullRequest = R.has('pull_request');
     console.log(req.body.action);
     var handleEvent = R.cond(
-        [isPullRequest, onPullRequest(res)],
-        [R.T, through(res)]
+        [isPullRequest, onPullRequest(res)], [R.T, through(res)]
     );
     handleEvent(req.body);
 });
