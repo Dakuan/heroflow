@@ -4,7 +4,7 @@ block content
 	div
 		h3 Github flow via Heroku
 		p. 
-			Github flow mandates that all commits to the master branch are shipped immediately. 
+			<a href="https://guides.github.com/introduction/flow/index.html" target="_blank">Github flow</a> mandates that all commits to the master branch are shipped immediately. 
 			Instead of traditional development and staging environments, each feature should have it's own environment, with constant rebasing ensuring 
 			that integration issues are trapped early. 
 		p.
@@ -16,14 +16,18 @@ block content
 		h4 The flow
 
 		ul
-			li You reate a pull request on Github
+			li You create a pull request on Github
 			li Heroflow provisions, configures and deploys your app on Heroku
+			li Heroflow adds an entry to the heroflow UI *
+			li Heroflow posts a comment to the pull request informing you where to find your heroku app *
 			li You add commits to your pull request
 			li Heroflow deploys updates to the Heroku app
 			li You merge your feature and delete the pull request
 			li Heroflow deletes the Heroku app
 			li Heroflow dutifully waits for your next pull request to be opened
 
+		p
+			* To be delivered
 		h3 Contact
 
 		p For any enquiries please contact Dom Barker
