@@ -1,0 +1,20 @@
+extends layouts/index
+
+block content
+	div
+		if apps.length === 0
+			p.alert.alert-info There are no features deployed at the moment
+
+		for app in apps
+			.media(style="margin-bottom:3em;")
+				div.media-left(style="padding-right:30px;")
+					a(href="#")
+						img.img-circle.media-object(src=app.pull_request.user.avatar_url style="width:60px;height:60px;")
+				.media-body
+					h3.media-heading
+						= app.pull_request.title
+					a(href=app.pull_request.head.repo.html_url)= app.pull_request.head.repo.full_name
+					| !{_md.toHTML(app.pull_request.body)}
+					div(style="margin-top:15px;")
+						a.btn.btn-primary.btn-sm(style="margin-right:1em;" href=app.heroku_app.web_url target="_blank") View app
+						a.btn.btn-default.btn-sm(href=app.pull_request.html_url) View pull request

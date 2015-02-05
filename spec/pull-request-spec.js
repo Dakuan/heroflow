@@ -130,8 +130,12 @@ describe("Handle Pull Request events", function() {
             beforeEach(function() {
                 scope = heroku.post('/apps/test-app/builds')
                     .reply(201, require('./data/heroku/create-build-success'))
+                    .get('/apps/quill-nabu-dev/config_vars')
+                    .reply(200, require('./data/heroku/get-config-vars'))
                     .post('/apps')
                     .reply(201, require('./data/heroku/create-app-success'))
+                    .put('/apps/test-app/config_vars')
+                    .reply(200, require('./data/heroku/set-config-vars'))
                     .post('/apps/test-app/releases')
                     .reply(201, {});
             })

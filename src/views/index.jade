@@ -1,20 +1,14 @@
-extends layouts/index
+extends layouts/blank
 
 block content
-	div
-		if apps.length === 0
-			p.alert.alert-info There are no features deployed at the moment
-
-		for app in apps
-			.media(style="margin-bottom:3em;")
-				div.media-left(style="padding-right:30px;")
-					a(href="#")
-						img.img-circle.media-object(src=app.pull_request.user.avatar_url style="width:60px;height:60px;")
-				.media-body
-					h3.media-heading
-						= app.pull_request.title
-					a(href=app.pull_request.head.repo.html_url)= app.pull_request.head.repo.full_name
-					| !{_md.toHTML(app.pull_request.body)}
-					div(style="margin-top:15px;")
-						a.btn.btn-primary.btn-sm(style="margin-right:1em;" href=app.heroku_app.web_url target="_blank") View app
-						a.btn.btn-default.btn-sm(href=app.pull_request.html_url) View pull request
+	div.container.container-fluid
+		div.jumbotron(style="background-color: rgba(0, 0, 0, 0.48);margin-top: 100px;")
+			h1(style="font-family:'Square Sans Pro Light', Calibri, 'Trebuchet MS', sans-serif; font-size-adjust:0.49; font-weight:200; font-style:normal;font-style: normal;letter-spacing: -1px;") 
+				a(href="/")
+					i.fa.fa-cube(style="margin-right:0.5em;color: rgb(254, 114, 30);")
+				| heroflow
+			h3 Github flow via Heroku
+			p Automate the deployment of your feature branches
+			a.btn.btn-primary.btn-lg(href="/login") 
+				i.fa.fa-github(style="margin-right:0.5em;")
+				| Login with Github
