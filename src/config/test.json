@@ -1,4 +1,6 @@
 {
 	"herokuApiKey": "12345",
-	"githubToken": "12345"
+	"githubToken": "12345",
+	"githubKey": "12345",
+	"githubSecret": "12345"
 }
