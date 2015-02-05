@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient,
     db,
-    url = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/nabu-deployer';
+    url = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/heroflow';
 
 module.exports = {
     connect: function(next) {

@@ -70,6 +70,16 @@ var onClosed = R.curry(function(res, body) {
     }, onError(res)).done();
 });
 
+function createAndConfigure(branchName, fromConfig) {
+    return createHerokuApp(branchName)
+        .then(function(toApp) {
+            return setAppConfig(toApp.name, fromConfig)
+                .then(function() {
+                    return Q.fcall(R.always(toApp));
+                });
+        });
+}
+
 var onSync = R.curry(function(res, body) {
     console.log('pull request sync!');
     var branchName = body.pull_request.head.ref;
@@ -79,13 +89,16 @@ var onSync = R.curry(function(res, body) {
         .then(function(pr) {
             var next;
 
-            var cr = createHerokuApp(branchName)
-                .then(function(app) {
+            var cr = getAppConfig('quill-nabu-dev')
+                .then(function(fromConfig) {
+                    return createAndConfigure(branchName, fromConfig)
+                }).then(function(app) {
                     return storePullRequest({
                         pull_request: body.pull_request,
                         heroku_app: app
                     });
                 });
+
             var next = R.ifElse(
                 R.I,
                 R.always(Q.fcall(R.always(pr))),

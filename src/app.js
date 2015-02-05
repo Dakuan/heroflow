@@ -1,11 +1,12 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
+    session = require('cookie-session'),
     onPullRequest = require('./event-handlers/pull-request-handler'),
     getPullRequests = require('./queries/get-pull-requests-list'),
     R = require('ramda'),
+    passport = require('passport'),
     markdown = require('markdown').markdown,
     app = express();
-
 
 // view engine
 app.locals._md = markdown;
@@ -13,24 +14,57 @@ app.set('views', 'src/views/');
 app.set('view engine', 'jade');
 
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'blah'
+}));
+
+// Login
+require('./auth/auth')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', function(req, res, next) {
+    res.render('index');
+});
+
+function hasUser(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
+app.get('/features', hasUser, function(req, res, next) {
     getPullRequests().then(function(prs) {
-        res.render('index', {
+        res.render('features', {
             apps: prs,
-            route: 'features'
+            route: 'features',
+            user: req.user
         });
     }).catch(function(e) {
         next(e);
     });
 });
-
 app.get('/about', function(req, res, next) {
     res.render('about', {
-        route: 'about'
+        route: 'about',
+        user: req.user
     });
 });
+app.get('/login', passport.authenticate('github'));
+app.get('/oauth/callback', passport.authenticate('github', {
+    successRedirect: '/features',
+    failureRedirect: '/login'
+}));
+app.get('/logout', function(req, res, next) {
+    req.session = null;
+    res.redirect('/');
+});
 
+app.get('/fail', function(req, res, next) {
+    res.send('fail');
+});
 
 function through(res) {
     return function() {

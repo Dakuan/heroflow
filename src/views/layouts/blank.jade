@@ -13,22 +13,7 @@ html
 			  var s = document.getElementsByTagName('script')[0];
 			  s.parentNode.insertBefore(wf, s);
 			})();
-	body
-		div.container
-			.page-header(style="padding-left:13px;")
-				ul.nav.nav-pills.pull-right
-					if user
-						li(class=(route === 'features' ? 'active' : '')) 
-							a(href="/features") My features
-					li(class=(route === 'about' ? 'active' : ''))
-						a(href="/about") About
-					if user
-						li
-							a(href="/logout") Logout
-				h1(style="font-family:'Square Sans Pro Light', Calibri, 'Trebuchet MS', sans-serif; font-size-adjust:0.49; font-weight:200; font-style:normal;font-style: normal;letter-spacing: -1px;") 
-					a(href="/")
-						i.fa.fa-cube(style="margin-right:0.5em;color: rgb(254, 114, 30);")
-					| heroflow
-			block content
+	body(style="background-image: url(http://freshwallpaperhd.com/wp-content/uploads/2014/08/lava-flow-high-resolution-background-images.jpg);background-size: cover;color: white;")
+		block content
 		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css") 
 		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
