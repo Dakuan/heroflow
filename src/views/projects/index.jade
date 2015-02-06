@@ -1,0 +1,20 @@
+extends ../layouts/index
+
+block content
+	section
+		a.btn.btn-primary.add-project(href="/projects/add") Add project
+
+		div.tracked-repos
+			if projects.length === 0
+				p.alert.alert-info There are no projects at the moment
+
+			for project in projects
+				.media
+					div.media-left
+						a(href="#")
+							img.img-circle.media-object(src=project.owner.avatar_url)
+					.media-body
+						h3.media-heading
+							= project.name
+						a(href=project.html_url)= project.full_name
+						p= project.description
