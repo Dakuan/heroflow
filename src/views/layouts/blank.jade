@@ -2,6 +2,9 @@ html
 	head
 		title heroflow
 		block head
+		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css") 
+		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
+		link(rel="stylesheet" href="/public/css/heroflow.css")
 		script.
 			WebFontConfig = { fontdeck: { id: '53213' } };
 			(function() {
@@ -13,7 +16,6 @@ html
 			  var s = document.getElementsByTagName('script')[0];
 			  s.parentNode.insertBefore(wf, s);
 			})();
-	body(style="background-image: url(http://freshwallpaperhd.com/wp-content/uploads/2014/08/lava-flow-high-resolution-background-images.jpg);background-size: cover;color: white;")
+	body.front
 		block content
-		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css") 
-		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
+		

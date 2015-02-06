@@ -6,6 +6,7 @@ var express = require('express'),
     R = require('ramda'),
     passport = require('passport'),
     markdown = require('markdown').markdown,
+    path = require('path'),
     app = express();
 
 // view engine
@@ -17,6 +18,10 @@ app.use(bodyParser.json());
 app.use(session({
     secret: 'blah'
 }));
+
+// static
+app.use('/public/css', express.static(path.join(__dirname, '../build/css')));
+app.use('/public/images', express.static(path.join(__dirname, '../assets/images')));
 
 // Login
 require('./auth/auth')(passport);

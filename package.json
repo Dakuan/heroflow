@@ -24,6 +24,11 @@
     "request": "^2.52.0"
   },
   "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-develop-server": "^0.2.5",
+    "gulp-env": "^0.2.0",
+    "gulp-less": "^2.0.1",
+    "gulp-plumber": "^0.6.6",
     "mocha": "^2.1.0",
     "nock": "^0.59.1",
     "supertest": "^0.15.0"
