@@ -21,11 +21,10 @@ html
 			div.container
 				ul.nav.nav-pills.pull-right
 					if user
+						li(class=route === 'projects' ? 'active': '')
+							a(href="projects") Projects
 						li(class=(route === 'features' ? 'active' : '')) 
-							a(href="/features") My features
-					li(class=(route === 'about' ? 'active' : ''))
-						a(href="/about") About
-					if user
+							a(href="/features") Features
 						li
 							a(href="/logout") Logout
 				h1.logo

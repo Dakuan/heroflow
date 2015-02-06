@@ -1,0 +1,16 @@
+extends ../layouts/index
+
+block content
+	section.tracked-repos
+		for project in projects
+			.media
+				div.media-left
+					a(href="#")
+						img.img-circle.media-object(src=project.owner.avatar_url)
+				.media-body
+					h3.media-heading
+						= project.name
+					a(href=project.html_url)= project.full_name
+					p= project.description
+					div.btn-row
+						a.btn.btn-primary.btn-sm(href="/projects/add/" + project.name) Track

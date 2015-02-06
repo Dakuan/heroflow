@@ -3,10 +3,16 @@ var express = require('express'),
     session = require('cookie-session'),
     onPullRequest = require('./event-handlers/pull-request-handler'),
     getPullRequests = require('./queries/get-pull-requests-list'),
+    findMyRepos = require('./queries/find-my-repos'),
+    findRepo = require('./queries/find-repo'),
+    findAllProjects = require('./queries/find-all-projects'),
+    storeProject = require('./commands/store-project'),
+    createCommitHook = require('./commands/create-commit-hook'),
     R = require('ramda'),
     passport = require('passport'),
     markdown = require('markdown').markdown,
     path = require('path'),
+    Q = require('q'),
     app = express();
 
 // view engine
@@ -39,6 +45,55 @@ function hasUser(req, res, next) {
         res.redirect('/');
     }
 }
+
+app.get('/projects/add', hasUser, function(req, res, next) {
+
+    Q.all([
+        findMyRepos(req.user.githubToken.accessToken),
+        findAllProjects()
+    ]).then(function(data) {
+
+        var myProjects = data[0],
+            trackedProjects = data[1];
+
+        var projects = R.reject(function(item) {
+            return R.contains(item.id, R.pluck('id', trackedProjects))
+        }, myProjects);
+
+        res.render('projects/add', {
+            route: 'projects',
+            projects: projects,
+            user: req.user
+        });
+    }, function(err) {
+        next(err);
+    });
+});
+
+app.get('/projects', hasUser, function(req, res, next) {
+    findAllProjects().then(function(projects) {
+        res.render('projects/index', {
+            route: 'projects',
+            projects: projects,
+            user: req.user
+        });
+    });
+});
+
+app.get('/projects/add/:projectName', hasUser, function(req, res, next) {
+    findRepo(req.user.githubToken.accessToken, req.user.username, req.params.projectName)
+        .then(function(repo) {
+            return Q.all([
+                storeProject(repo),
+                createCommitHook(req.user.githubToken.accessToken, req.user.username, repo.name)
+            ]);
+        })
+        .then(function() {
+            res.redirect('/projects');
+        }, function(err) {
+            next(err);
+        });
+});
 
 app.get('/features', hasUser, function(req, res, next) {
     getPullRequests().then(function(prs) {
