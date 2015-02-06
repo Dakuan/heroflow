@@ -1,7 +1,10 @@
 html
 	head
 		title heroflow
-		block head
+		block head			
+		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css") 
+		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
+		link(rel="stylesheet" href="/public/css/heroflow.css")
 		script.
 			WebFontConfig = { fontdeck: { id: '53213' } };
 			(function() {
@@ -14,8 +17,8 @@ html
 			  s.parentNode.insertBefore(wf, s);
 			})();
 	body
-		div.container
-			.page-header(style="padding-left:13px;")
+		header
+			div.container
 				ul.nav.nav-pills.pull-right
 					if user
 						li(class=(route === 'features' ? 'active' : '')) 
@@ -25,10 +28,9 @@ html
 					if user
 						li
 							a(href="/logout") Logout
-				h1(style="font-family:'Square Sans Pro Light', Calibri, 'Trebuchet MS', sans-serif; font-size-adjust:0.49; font-weight:200; font-style:normal;font-style: normal;letter-spacing: -1px;") 
+				h1.logo
 					a(href="/")
-						i.fa.fa-cube(style="margin-right:0.5em;color: rgb(254, 114, 30);")
+						i.fa.fa-cube
 					| heroflow
+		div.container
 			block content
-		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css") 
-		link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")

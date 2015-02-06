@@ -1,0 +1,103 @@
+@lava-image: "http://freshwallpaperhd.com/wp-content/uploads/2014/08/lava-flow-high-resolution-background-images.jpg";
+body.front {
+    background-image: url(@lava-image);
+    background-size: cover;
+    color: white;
+    .jumbotron {
+        margin-top: 100px;
+        background-color: rgba(0, 0, 0, 0.48);
+    }
+    .btn {
+        .fa-github {
+            margin-right: 0.5em;
+        }
+    }
+}
+
+
+@flow-orange: rgb(254, 114, 30);
+@flow-plum: #BC3E4E;
+
+@-webkit-keyframes morph {
+	0% {
+		color: @flow-orange;
+	}
+	70% {
+		color: @flow-plum;
+	}
+	100% { 
+		color: @flow-orange; 
+	}
+}
+
+@keyframes morph {
+	0% {
+		color: @flow-orange;
+	}
+	70% {
+		color: @flow-plum;
+	}
+	100% { 
+		color: @flow-orange; 
+	}
+}
+
+header {
+    padding: 3em;
+    background-image: url("http://freshwallpaperhd.com/wp-content/uploads/2014/08/lava-flow-high-resolution-background-images.jpg");
+    background-position-y: 617px;
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    margin-bottom: 3em;
+    h1 {
+        margin: 0;
+    }
+    ul.nav-pills {
+        li {
+            a {
+                color: white!important;
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.48);
+                }
+            }
+        }
+    }
+}
+h1.logo {	
+    font-family: 'Square Sans Pro Light', Calibri, 'Trebuchet MS', sans-serif;
+    font-size-adjust: 0.49;
+    font-weight: 200;
+    font-style: normal;
+    font-style: normal;
+    letter-spacing: -1px;
+    .fa-cube {
+    	animation: morph 8s linear infinite;
+    	-webkit-animation: morph 8s linear infinite;
+        margin-right: 0.5em;
+        color: rgb(254, 114, 30);
+    }
+}
+.tracked-repos {
+    .media {
+        margin-bottom: 3em;
+        .media-left {
+            padding-right: 30px;
+            img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        .media-body {
+            .btn-row {
+                margin-top: 15px;
+                .btn {
+                    margin-right: 1em;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
